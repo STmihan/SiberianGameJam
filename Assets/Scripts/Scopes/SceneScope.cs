@@ -15,12 +15,14 @@ namespace Scopes
         [SerializeField] private FilmModeUI _filmModeUI;
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private InventoryUI _inventoryUI;
+        [SerializeField] private CodeKeyUI _codeKeyUI;
         
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<InteractService>(Lifetime.Singleton);
             builder.Register<PlayerControllerFactory>(Lifetime.Singleton);
 
+            builder.RegisterInstance(_codeKeyUI);
             builder.RegisterInstance(_inventoryUI);
             builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(_dialogueUI);

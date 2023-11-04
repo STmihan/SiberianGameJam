@@ -29,5 +29,10 @@ namespace Game.Services
         }
         
         public bool GetDialogueInput() => Input.anyKeyDown;
+        
+        public bool GetBackInput()
+        {
+            return Input.GetKeyDown(KeyCode.Escape);
+        }
     }
 }
