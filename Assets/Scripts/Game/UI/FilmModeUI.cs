@@ -1,12 +1,10 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
 
 namespace Game.UI
 {
-    public class FilmModeUI : SceneScopeSingleton<FilmModeUI>
+    public class FilmModeUI : MonoBehaviour
     {
         [SerializeField] private Image _top;
         [SerializeField] private Image _bottom;

@@ -1,20 +1,19 @@
 using Game.Services;
 using UnityEngine;
-using Utils;
 using VContainer;
 
 namespace Game
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerController : SceneScopeSingleton<PlayerController>
+    public class PlayerController : MonoBehaviour
     {
-        public IInteractable CurrentInteractable { get; private set; }
-
         [SerializeField] private float _moveSpeed;
 
         [Inject]
         private InputManager _inputManager;
+        [Inject]
+        private InteractService _interactService;
         
         private Rigidbody2D _rb;
         private PlayerAnimationController _animationController;
@@ -68,7 +67,7 @@ namespace Game
                 {
                     if (hits[i].TryGetComponent(out IInteractable interactable))
                     {
-                        CurrentInteractable = interactable;
+                        _interactService.CurrentInteractable = interactable;
                         if (_inputManager.GetInteractInput())
                         {
                             interactable.Interact();
@@ -76,13 +75,13 @@ namespace Game
                     }
                     else
                     {
-                        CurrentInteractable = null;
+                        _interactService.CurrentInteractable = null;
                     }
                 }
             }
             else
             {
-                CurrentInteractable = null;
+                _interactService.CurrentInteractable = null;
             }
         }
     }

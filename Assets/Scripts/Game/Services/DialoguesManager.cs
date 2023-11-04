@@ -3,37 +3,64 @@ using Game.DialogueObjects;
 using Game.UI;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace Game.Services
 {
-    public class DialoguesManager
+    public class DialoguesManager : ITickable
     {
         private readonly InputManager _inputManager;
-        private readonly DialogueUI _ui;
+        private readonly DialogueUI _dialogueUI;
+        private readonly FilmModeUI _filmModeUI;
+
+        public const float InteractionCooldown = 1.5f;
+
+        private float _currentCooldown;
 
         [Inject]
-        public DialoguesManager(InputManager inputManager, DialogueUI ui)
+        public DialoguesManager(InputManager inputManager, DialogueUI dialogueUI, FilmModeUI filmModeUI)
         {
             _inputManager = inputManager;
-            _ui = ui;
+            _dialogueUI = dialogueUI;
+            _filmModeUI = filmModeUI;
         }
 
         public void StartDialogue(Dialogue dialogue)
         {
             DOTween.Sequence()
-                .AppendCallback(() => FilmModeUI.Instance.Enable())
+                .AppendCallback(() => _filmModeUI.Enable())
                 .AppendCallback(() => _inputManager.PlayerInputBlocked = true)
                 .AppendCallback(() => Debug.Log(dialogue.ToString()))
                 .AppendInterval(FilmModeUI.FadeDuration)
-                .AppendCallback(() => _ui.ShowDialogue(dialogue))
-                .AppendCallback(() => _ui.OnDialogueEnd += OnDialogueEnd);
+                .AppendCallback(() => _dialogueUI.ShowDialogue(dialogue))
+                .AppendCallback(() => _dialogueUI.OnDialogueEnd += OnDialogueEnd);
         }
 
         private void OnDialogueEnd(Dialogue dialogue)
         {
-            _ui.OnDialogueEnd -= OnDialogueEnd;
+            _dialogueUI.OnDialogueEnd -= OnDialogueEnd;
             _inputManager.PlayerInputBlocked = false;
-            FilmModeUI.Instance.Disable();
+            _filmModeUI.Disable();
+            _currentCooldown = InteractionCooldown;
+        }
+
+        public bool IsDialogueCooldown()
+        {
+            return _currentCooldown > 0;
+        }
+
+        private void ProcessTimer()
+        {
+            if (_currentCooldown > 0)
+            {
+                _currentCooldown -= Time.deltaTime;
+                if (_currentCooldown < 0) _currentCooldown = 0;
+            }
+        }
+
+        public void Tick()
+        {
+            ProcessTimer();
         }
     }
 }

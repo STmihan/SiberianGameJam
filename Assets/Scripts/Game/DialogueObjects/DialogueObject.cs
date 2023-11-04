@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Services;
-using Game.UI;
 using UnityEngine;
 using VContainer;
 
@@ -16,11 +15,8 @@ namespace Game.DialogueObjects
         private readonly List<Dialogue> _dialogues = new();
 
         [Inject] private DialoguesManager _dialoguesManager;
+        [Inject] private InteractService _interactService;
 
-        public const float InteractionCooldown = 2f;
-
-        private float _currentCooldown;
-        
         private void Awake()
         {
             _dialogues.AddRange(_startDialogues);
@@ -28,8 +24,8 @@ namespace Game.DialogueObjects
 
         public void Interact()
         {
-            if (_currentCooldown > 0) return;
-            
+            if (_dialoguesManager.IsDialogueCooldown()) return;
+
             Debug.Log("Interacting with dialogue object. Dialogues count: " + _dialogues.Count);
             if (_dialogues.Count > 0)
             {
@@ -41,14 +37,11 @@ namespace Game.DialogueObjects
             {
                 _dialoguesManager.StartDialogue(_noDialogueDialogue);
             }
-
-            _currentCooldown = InteractionCooldown;
         }
 
         public void Update()
         {
-            _canInteractIndicator.alpha = ReferenceEquals(PlayerController.Instance.CurrentInteractable, this) ? 1 : 0;
-            ProcessTimer();
+            _canInteractIndicator.alpha = ReferenceEquals(_interactService.CurrentInteractable, this) ? 1 : 0;
         }
 
         public void LoadDialogue(string dialogue)
@@ -61,15 +54,6 @@ namespace Game.DialogueObjects
             }
 
             _dialogues.Add(load);
-        }
-
-        private void ProcessTimer()
-        {
-            if (_currentCooldown > 0)
-            {
-                _currentCooldown -= Time.deltaTime;
-                if (_currentCooldown < 0) _currentCooldown = 0;
-            }
         }
     }
 }
