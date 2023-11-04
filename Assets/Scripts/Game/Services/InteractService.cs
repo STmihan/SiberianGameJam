@@ -1,4 +1,6 @@
-﻿namespace Game.Services
+﻿using Game.Objects;
+
+namespace Game.Services
 {
     public class InteractService
     {

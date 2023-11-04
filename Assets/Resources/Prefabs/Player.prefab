@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+  _interactRadius: 1
 --- !u!95 &2104832134723651004
 Animator:
   serializedVersion: 5

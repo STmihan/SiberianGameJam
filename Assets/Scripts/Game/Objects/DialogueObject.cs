@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game.Data;
 using Game.Services;
 using UnityEngine;
 using VContainer;
 
-namespace Game.DialogueObjects
+namespace Game.Objects
 {
     public class DialogueObject : MonoBehaviour, IInteractable
     {

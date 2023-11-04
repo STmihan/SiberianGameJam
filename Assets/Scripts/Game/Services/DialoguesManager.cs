@@ -1,5 +1,5 @@
 ﻿using DG.Tweening;
-using Game.DialogueObjects;
+using Game.Data;
 using Game.UI;
 using UnityEngine;
 using VContainer;

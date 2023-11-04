@@ -1,3 +1,4 @@
+using Game.Objects;
 using Game.Services;
 using UnityEngine;
 using VContainer;
@@ -9,6 +10,7 @@ namespace Game
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _interactRadius;
 
         [Inject]
         private InputManager _inputManager;
@@ -58,9 +60,9 @@ namespace Game
 
         private void CheckInteract()
         {
-            Vector2 interactPosition = transform.position + (Vector3)(_lastDirection * 0.5f);
+            Vector2 interactPosition = transform.position;
             Collider2D[] hits = new Collider2D[4];
-            int hitCount = Physics2D.OverlapCircleNonAlloc(interactPosition, 0.5f, hits);
+            int hitCount = Physics2D.OverlapCircleNonAlloc(interactPosition, _interactRadius, hits);
             if (hitCount > 0)
             {
                 for (int i = 0; i < hitCount; i++)

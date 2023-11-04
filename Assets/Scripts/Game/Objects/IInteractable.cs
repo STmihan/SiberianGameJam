@@ -1,4 +1,4 @@
-﻿namespace Game
+﻿namespace Game.Objects
 {
     public interface IInteractable
     {

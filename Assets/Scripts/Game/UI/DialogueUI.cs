@@ -2,7 +2,7 @@
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using Game.DialogueObjects;
+using Game.Data;
 using Game.Services;
 using TMPro;
 using UnityEngine;
