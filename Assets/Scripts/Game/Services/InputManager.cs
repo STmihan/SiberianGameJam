@@ -21,7 +21,7 @@ namespace Game.Services
             return Input.GetKeyDown(KeyCode.E);
         }
     
-        public bool GetWatchInput()
+        public bool GetDevilZone()
         {
             if (PlayerInputBlocked) return false;
 
