@@ -1,6 +1,6 @@
 name: Release on Master 😎
 
-on: 
+on:
   # This allows for manual triggering of the action
   workflow_dispatch:
   # This will run this action on every push to the master branch - update as required
@@ -8,23 +8,20 @@ on:
     branches:
       - master
 
-jobs:    
+jobs:
   build-project:
     name: Build project ✨
     runs-on: ubuntu-latest
 
     # Enter in project properties here
     env:
-      PROJECT_NAME: Switter-Jam-2023
+      PROJECT_NAME: "SiberianGameJam2023"
 
     strategy:
       fail-fast: false
       matrix:
-        targetPlatform:         # These are the definitions from: https://docs.unity3d.com/ScriptReference/BuildTarget.html
-#          - StandaloneOSX       # Build a macOS standalone (Intel 64-bit).
-#          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-#          - StandaloneLinux64   # Build a Linux 64-bit standalone
-          - WebGL               # Build for WebGL
+        targetPlatform:
+          - WebGL
 
     steps:
       # Checkout
@@ -40,34 +37,13 @@ jobs:
           key: Library-${{ matrix.targetPlatform }}
 
       # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v2
+      - uses: game-ci/unity-builder@v3
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          ## Use below variables for Professional Serial
-          # UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          # UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          # UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform:  ${{ matrix.targetPlatform }}
-          buildName: ${{ env.PROJECT_NAME }}
-
-      # We manually compress the MacOS build, as uploading as an Artifact causes issues on MacOS
-      - name: Compress Build (MacOS)
-        if: matrix.targetPlatform == 'StandaloneOSX'
-        run: |
-          pushd build/${{ matrix.targetPlatform }}
-          sudo zip -r ${{ env.PROJECT_NAME }}-${{ matrix.targetPlatform }}.zip ./${{ env.PROJECT_NAME }}.app
-          popd
-          sudo mv build/${{ matrix.targetPlatform }}/${{ env.PROJECT_NAME }}-${{ matrix.targetPlatform }}.zip build/${{ env.PROJECT_NAME }}-${{ matrix.targetPlatform }}.zip
-          
-      - name: Compress Build
-        if: matrix.targetPlatform != 'StandaloneOSX' && matrix.targetPlatform != 'WebGL'
-        run: |
-          pushd build/${{ matrix.targetPlatform }}
-          sudo zip -r ${{ env.PROJECT_NAME }}-${{ matrix.targetPlatform }}.zip ./*
-          popd
-          sudo mv build/${{ matrix.targetPlatform }}/${{ env.PROJECT_NAME }}-${{ matrix.targetPlatform }}.zip build/${{ env.PROJECT_NAME }}-${{ matrix.targetPlatform }}.zip
+          targetPlatform: WebGL
 
       # Upload Artifacts
       - name: Upload Artifacts
