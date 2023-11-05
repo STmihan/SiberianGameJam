@@ -1,12 +1,13 @@
 ﻿using Game.Data;
 using Game.Services;
 using Game.UI;
+using Scopes;
 using UnityEngine;
 using VContainer;
 
 namespace Game.Objects
 {
-    public class ItemObject : MonoBehaviour, IInteractable
+    public class ItemObject : MonoBehaviour, IInteractable, IInjectable
     {
         [SerializeField] private CanvasGroup _canInteractIndicator;
         [SerializeField] private Item _item;

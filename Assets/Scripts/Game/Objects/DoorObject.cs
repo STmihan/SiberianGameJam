@@ -1,11 +1,12 @@
 ﻿using Game.Services;
 using Game.UI;
+using Scopes;
 using UnityEngine;
 using VContainer;
 
 namespace Game.Objects
 {
-    public class DoorObject : MonoBehaviour, IInteractable
+    public class DoorObject : MonoBehaviour, IInteractable, IInjectable
     {
         [SerializeField] private CanvasGroup _canInteractIndicator;
 

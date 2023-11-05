@@ -2,12 +2,13 @@
 using System.Linq;
 using Game.Data;
 using Game.Services;
+using Scopes;
 using UnityEngine;
 using VContainer;
 
 namespace Game.Objects
 {
-    public class DialogueObject : MonoBehaviour, IInteractable
+    public class DialogueObject : MonoBehaviour, IInteractable, IInjectable
     {
         [SerializeField] private CanvasGroup _canInteractIndicator;
         [SerializeField] private List<Dialogue> _startDialogues;
