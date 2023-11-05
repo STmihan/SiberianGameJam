@@ -1,12 +1,13 @@
 ﻿using Game.Services;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
 public class GameController : IStartable
 {
     private readonly SceneLoader _sceneLoader;
-    
+
     [Inject]
     public GameController(SceneLoader sceneLoader)
     {
@@ -16,6 +17,9 @@ public class GameController : IStartable
     public void Start()
     {
         Debug.Log("GameController.Start");
-        _sceneLoader.LoadScene("Village");
+        if (SceneManager.GetActiveScene().name == "Gameplay")
+        {
+            _sceneLoader.LoadScene("Village");
+        }
     }
 }
