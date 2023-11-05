@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Factories;
+﻿using Game.Factories;
 using Scopes;
 using UnityEngine;
 using VContainer;

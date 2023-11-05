@@ -15,9 +15,10 @@ namespace Scopes
     {
         [SerializeField] private DialogueUI _dialogueUI;
         [SerializeField] private FilmModeUI _filmModeUI;
-        [SerializeField] private CameraController _cameraController;
         [SerializeField] private InventoryUI _inventoryUI;
         [SerializeField] private CodeKeyUI _codeKeyUI;
+        [SerializeField] private CameraController _cameraController;
+        [SerializeField] private DevilZoneController _devilZoneController;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -26,6 +27,7 @@ namespace Scopes
                     .OfType<IInjectable>().Select(t => (t as MonoBehaviour)?.gameObject).ToArray();
             autoInjectGameObjects.AddRange(findObjectsByType);
             
+            builder.RegisterInstance(_devilZoneController);
             builder.Register<InteractService>(Lifetime.Singleton);
             builder.Register<PlayerControllerFactory>(Lifetime.Singleton);
 

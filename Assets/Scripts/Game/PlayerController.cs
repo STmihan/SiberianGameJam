@@ -5,7 +5,6 @@ using VContainer;
 
 namespace Game
 {
-    [RequireComponent(typeof(DevilZoneController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour
@@ -15,19 +14,20 @@ namespace Game
 
         [Inject] private InputManager _inputManager;
         [Inject] private InteractService _interactService;
+        [Inject] private DevilZoneController _devilZoneController;
 
         private Rigidbody2D _rb;
         private PlayerAnimationController _animationController;
         private Animator _animator;
-        private DevilZoneController _devilZoneController;
 
         private bool _isMoving;
+        private bool _devilZoneEnabled;
         private Vector2 _movementInput;
         private Vector2 _lastDirection = Vector2.down;
 
         private void Start()
         {
-            _devilZoneController = GetComponent<DevilZoneController>();
+            _devilZoneEnabled = false;
             _animator = GetComponent<Animator>();
             _rb = GetComponent<Rigidbody2D>();
             _animationController = new PlayerAnimationController(_animator, _lastDirection);
@@ -37,7 +37,8 @@ namespace Game
         {
             Move();
             CheckInteract();
-            _devilZoneController.UpdateDZ(_inputManager.GetDevilZoneInput());
+            if (_inputManager.GetDevilZoneInput()) _devilZoneEnabled = !_devilZoneEnabled;
+            _devilZoneEnabled = _devilZoneController.UpdateDZ(_devilZoneEnabled, transform.position);
         }
 
         private void FixedUpdate()
@@ -93,6 +94,22 @@ namespace Game
                     _interactService.CurrentInteractable = interactable;
                     if (_inputManager.GetInteractInput()) interactable.Interact();
                 }
+            }
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.TryGetComponent(out DZZone zone))
+            {
+                _devilZoneController.Zone = zone;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.TryGetComponent(out DZZone _))
+            {
+                _devilZoneController.Zone = null;
             }
         }
     }
