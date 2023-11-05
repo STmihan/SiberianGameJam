@@ -7,16 +7,13 @@ namespace Game.Objects
 {
     public class DevilZoneObject : MonoBehaviour, IInjectable
     {
-        private const string MatPath = "Materials/DZ_Mat";
-
         [Inject] private DevilZoneController _devilZoneController;
 
         private Collider2D _collider;
 
         private void Start()
         {
-            var material = Resources.Load<Material>(MatPath);
-            GetComponent<Renderer>().material = material;
+            GetComponent<Renderer>().material = _devilZoneController.Mat;
             if (TryGetComponent(out Collider2D col)) _collider = col;
         }
 
