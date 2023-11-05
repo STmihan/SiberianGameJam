@@ -12,11 +12,7 @@ jobs:
   build-project:
     name: Build project ✨
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-
+        
     steps:
       # Checkout
       - name: Checkout repository
