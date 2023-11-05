@@ -21,7 +21,7 @@ namespace Game.UI
         private void Start()
         {
             _submitButton.onClick.AddListener(Submit);
-            Disable();
+            Disable(true);
         }
 
         public void Enable()
@@ -34,9 +34,9 @@ namespace Game.UI
             _inputManager.PlayerInputBlocked = true;
         }
         
-        public void Disable()
+        public void Disable(bool immediate = false)
         {
-            _canvasGroup.DOFade(0, 0.3f);
+            _canvasGroup.DOFade(0, immediate ? 0 : 0.3f);
             _inputManager.PlayerInputBlocked = false;
         }
 
