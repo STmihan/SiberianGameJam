@@ -58,7 +58,7 @@ jobs:
         if: matrix.targetPlatform == 'WebGL'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/WebGL/${{ env.PROJECT_NAME }} # The folder the action should deploy.
+          publish_dir: build/WebGL/${{ env.PROJECT_NAME }} # The folder the action should deploy. 
 
       # More details on usage here: https://github.com/marketplace/actions/create-release
       - name: Create Release
