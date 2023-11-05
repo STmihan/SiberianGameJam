@@ -7,40 +7,41 @@ namespace Game.Services
     {
         private static readonly int CircleRadius = Shader.PropertyToID("_CircleRadius");
         private static readonly int CirclePos = Shader.PropertyToID("_CirclePos");
+        private const string MatPath = "Materials/DZ_Mat";
 
         [SerializeField] private float _maxRadius = 1.2f;
-        [SerializeField] private Material _dzMaterial;
-        
-        public bool Enabled { get; private set; } = true;
 
-        private DZZone _zone;
+        public bool Enabled { get; private set; } = true;
+        public DZZone Zone { get; set; }
+
+        public Material Mat
+        {
+            get
+            {
+                if (_material == null)
+                {
+                    var material = Resources.Load<Material>(MatPath);
+                    var copy = new Material(material);
+                    _material = copy;
+                }
+
+                return _material;
+            }
+        }
 
         private float _radius;
+        private Material _material;
 
-        public void UpdateDZ(bool toggle)
+        public bool UpdateDZ(bool toggle, Vector2 pos)
         {
-            if (_zone == null) toggle = false;
-            if (_zone != null && !_zone.IsInZone(_maxRadius, transform.position)) toggle = false;
+            if (Zone == null) toggle = false;
+            if (Zone != null && !Zone.IsInZone(_maxRadius, pos)) toggle = false;
             Enabled = toggle;
-            _dzMaterial.SetVector(CirclePos, transform.position);
-            _dzMaterial.SetFloat(CircleRadius, _radius);
-            _radius = Mathf.Lerp(_radius, toggle ? _maxRadius : 0, Time.deltaTime * 5);
-        }
+            Mat.SetVector(CirclePos, pos);
+            Mat.SetFloat(CircleRadius, _radius);
+            _radius = Mathf.Lerp(_radius, Enabled ? _maxRadius : 0, Time.deltaTime * 5);
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.TryGetComponent(out DZZone zone))
-            {
-                _zone = zone;
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.TryGetComponent(out DZZone _))
-            {
-                _zone = null;
-            }
+            return Enabled;
         }
     }
 }

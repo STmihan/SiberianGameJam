@@ -3,16 +3,10 @@ using UnityEngine;
 
 namespace Game
 {
-    [RequireComponent(typeof(CinemachineVirtualCamera))]
     public class CameraController : MonoBehaviour
     {
-        private CinemachineVirtualCamera _virtualCamera;
-
-        private void Start()
-        {
-            _virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        }
-
+        [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+        
         public void SetTarget(Transform target)
         {
             _virtualCamera.Follow = target;

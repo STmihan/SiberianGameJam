@@ -1,0 +1,27 @@
+name: Deploy to GitHub Pages
+
+on:
+  # This allows for manual triggering of the action
+  workflow_dispatch:
+  # This will run this action on every push to the master branch - update as required
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy project ✨
+    runs-on: ubuntu-latest
+        
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: Build/WebGL
+

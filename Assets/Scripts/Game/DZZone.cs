@@ -29,23 +29,5 @@ namespace Game
         {
             return bounds.Contains(pos);
         }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Vector2 center = _collider.bounds.center;
-            Vector2 size = _collider.bounds.extents;
-            Gizmos.DrawLine(center + new Vector2(-size.x, size.y), center + new Vector2(size.x, size.y));
-            Gizmos.DrawLine(center + new Vector2(-size.x, -size.y), center + new Vector2(size.x, -size.y));
-            Gizmos.DrawLine(center + new Vector2(-size.x, size.y), center + new Vector2(-size.x, -size.y));
-            Gizmos.DrawLine(center + new Vector2(size.x, size.y), center + new Vector2(size.x, -size.y));
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(center + new Vector2(-size.x + _radius, size.y - _radius), center + new Vector2(size.x - _radius, size.y - _radius));
-            Gizmos.DrawLine(center + new Vector2(-size.x + _radius, -size.y + _radius), center + new Vector2(size.x - _radius, -size.y + _radius));
-            Gizmos.DrawLine(center + new Vector2(-size.x + _radius, size.y - _radius), center + new Vector2(-size.x + _radius, -size.y + _radius));
-            Gizmos.DrawLine(center + new Vector2(size.x - _radius, size.y - _radius), center + new Vector2(size.x - _radius, -size.y + _radius) );
-
-            Gizmos.color = Color.white;
-        }
     }
 }

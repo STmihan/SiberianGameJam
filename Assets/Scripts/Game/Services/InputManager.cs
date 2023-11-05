@@ -25,7 +25,7 @@ namespace Game.Services
         {
             if (PlayerInputBlocked) return false;
 
-            return Input.GetKey(KeyCode.Space);
+            return Input.GetKeyDown(KeyCode.Space);
         }
         
         public bool GetDialogueInput() => Input.anyKeyDown;
