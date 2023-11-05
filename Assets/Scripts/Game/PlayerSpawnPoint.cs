@@ -1,11 +1,12 @@
 ﻿using System;
 using Game.Factories;
+using Scopes;
 using UnityEngine;
 using VContainer;
 
 namespace Game
 {
-    public class PlayerSpawnPoint : MonoBehaviour
+    public class PlayerSpawnPoint : MonoBehaviour, IInjectable
     {
         [Inject] private PlayerControllerFactory _playerControllerFactory;
         [Inject] private CameraController _cameraController;

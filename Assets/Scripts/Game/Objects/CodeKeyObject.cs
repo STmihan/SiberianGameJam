@@ -2,12 +2,13 @@
 using Game.Data;
 using Game.Services;
 using Game.UI;
+using Scopes;
 using UnityEngine;
 using VContainer;
 
 namespace Game.Objects
 {
-    public class CodeKeyObject : MonoBehaviour, IInteractable
+    public class CodeKeyObject : MonoBehaviour, IInteractable, IInjectable
     {
         [SerializeField] private CodeKey _codeKey;
         [SerializeField] private CanvasGroup _canInteractIndicator;

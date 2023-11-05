@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Game;
 using Game.Factories;
+using Game.Objects;
 using Game.Services;
 using Game.UI;
 using UnityEngine;
@@ -16,9 +18,14 @@ namespace Scopes
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private InventoryUI _inventoryUI;
         [SerializeField] private CodeKeyUI _codeKeyUI;
-        
+
         protected override void Configure(IContainerBuilder builder)
         {
+            var findObjectsByType =
+                FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID)
+                    .OfType<IInjectable>().Select(t => (t as MonoBehaviour)?.gameObject).ToArray();
+            autoInjectGameObjects.AddRange(findObjectsByType);
+            
             builder.Register<InteractService>(Lifetime.Singleton);
             builder.Register<PlayerControllerFactory>(Lifetime.Singleton);
 
