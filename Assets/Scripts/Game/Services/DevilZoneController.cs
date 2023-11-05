@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Services
 {
@@ -12,35 +11,21 @@ namespace Game.Services
         [SerializeField] private Material _dzMaterial;
         
         public bool Enabled { get; private set; } = true;
+        public DZZone Zone { get; set; }
 
-        private DZZone _zone;
 
         private float _radius;
 
-        public void UpdateDZ(bool toggle)
+        public bool UpdateDZ(bool toggle, Vector2 pos)
         {
-            if (_zone == null) toggle = false;
-            if (_zone != null && !_zone.IsInZone(_maxRadius, transform.position)) toggle = false;
+            if (Zone == null) toggle = false;
+            if (Zone != null && !Zone.IsInZone(_maxRadius, pos)) toggle = false;
             Enabled = toggle;
-            _dzMaterial.SetVector(CirclePos, transform.position);
+            _dzMaterial.SetVector(CirclePos, pos);
             _dzMaterial.SetFloat(CircleRadius, _radius);
-            _radius = Mathf.Lerp(_radius, toggle ? _maxRadius : 0, Time.deltaTime * 5);
-        }
+            _radius = Mathf.Lerp(_radius, Enabled ? _maxRadius : 0, Time.deltaTime * 5);
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.TryGetComponent(out DZZone zone))
-            {
-                _zone = zone;
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.TryGetComponent(out DZZone _))
-            {
-                _zone = null;
-            }
+            return Enabled;
         }
     }
 }
