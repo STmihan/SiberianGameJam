@@ -42,13 +42,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _CircleEdgeThickness: 0.03
-    - _CircleRadius: 0.0019275865
+    - _CircleRadius: 0.00002292285
     - _EnableExternalAlpha: 0
     - _NoiseScale: 0
     - _NoiseThreshold: 0
     m_Colors:
     - _CircleColor: {r: 3.031433, g: 0.49715513, b: 0.5434601, a: 1}
-    - _CirclePos: {r: -7.9948325, g: -7.523356, b: 0, a: 0}
+    - _CirclePos: {r: -8.273492, g: -8.086547, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _InnerColor: {r: 1, g: 0, b: 0, a: 1}

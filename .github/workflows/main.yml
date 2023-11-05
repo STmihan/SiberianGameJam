@@ -1,4 +1,4 @@
-name: Release on Master 😎
+name: Deploy to GitHub Pages
 
 on:
   # This allows for manual triggering of the action
@@ -9,22 +9,14 @@ on:
       - master
 
 jobs:
-  build-project:
-    name: Build project ✨
+  deploy:
+    name: Deploy project ✨
     runs-on: ubuntu-latest
         
     steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          lfs: true
-
-      #Upload to Pages (For WebGL builds)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # The folder the action should deploy. 
           publish_dir: Build/WebGL
 
