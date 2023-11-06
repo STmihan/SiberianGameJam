@@ -41,5 +41,12 @@ namespace Game.Services
             
             return Input.GetKeyDown(KeyCode.N);
         }
+
+        public bool GetEndGame()
+        {
+            if (PlayerInputBlocked) return false;
+            
+            return Input.GetKeyDown(KeyCode.F);
+        }
     }
 }
