@@ -1,5 +1,6 @@
 using Game.Objects;
 using Game.Services;
+using Game.UI;
 using UnityEngine;
 using VContainer;
 
@@ -15,6 +16,7 @@ namespace Game
         [Inject] private InputManager _inputManager;
         [Inject] private InteractService _interactService;
         [Inject] private DevilZoneController _devilZoneController;
+        [Inject] private NotesUI _notesUI;
 
         private Rigidbody2D _rb;
         private PlayerAnimationController _animationController;
@@ -22,12 +24,15 @@ namespace Game
 
         private bool _isMoving;
         private bool _devilZoneEnabled;
+        private bool _notesUIEnabled;
+
         private Vector2 _movementInput;
         private Vector2 _lastDirection = Vector2.down;
 
         private void Start()
         {
             _devilZoneEnabled = false;
+            _notesUIEnabled = false;
             _animator = GetComponent<Animator>();
             _rb = GetComponent<Rigidbody2D>();
             _animationController = new PlayerAnimationController(_animator, _lastDirection);
@@ -37,6 +42,22 @@ namespace Game
         {
             Move();
             CheckInteract();
+
+            ControlDevilZone();
+            ControlNotes();
+        }
+
+        private void ControlNotes()
+        {
+            if (_inputManager.GetNotesInput())
+            {
+                _notesUIEnabled = !_notesUIEnabled;
+                _notesUI.Toggle(_notesUIEnabled);
+            }
+        }
+
+        private void ControlDevilZone()
+        {
             if (_inputManager.GetDevilZoneInput()) _devilZoneEnabled = !_devilZoneEnabled;
             _devilZoneEnabled = _devilZoneController.UpdateDZ(_devilZoneEnabled, transform.position);
         }
@@ -83,20 +104,20 @@ namespace Game
                 if (_devilZoneController.Enabled)
                 {
                     if (!hits[i].GetComponent<DevilZoneObject>()) continue;
-                    
+
                     _interactService.CurrentInteractable = interactable;
                     if (_inputManager.GetInteractInput()) interactable.Interact();
                 }
                 else
                 {
                     if (hits[i].GetComponent<DevilZoneObject>()) continue;
-                    
+
                     _interactService.CurrentInteractable = interactable;
                     if (_inputManager.GetInteractInput()) interactable.Interact();
                 }
             }
         }
-        
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out DZZone zone))

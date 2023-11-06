@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.CallbackObjects;
 using UnityEngine;
 
 namespace Game.Data
@@ -11,6 +12,9 @@ namespace Game.Data
         [field: SerializeField]
         [field: Multiline]
         public List<string> Text { get; private set; } = new();
+        
+        [field: SerializeField]
+        public CallbackObject CallbackObject { get; private set; }
 
         public override string ToString()
         {

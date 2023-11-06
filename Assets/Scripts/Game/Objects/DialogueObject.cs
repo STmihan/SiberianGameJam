@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using Game.CallbackObjects;
 using Game.Data;
 using Game.Services;
 using Scopes;
@@ -11,51 +11,43 @@ namespace Game.Objects
     public class DialogueObject : MonoBehaviour, IInteractable, IInjectable
     {
         [SerializeField] private CanvasGroup _canInteractIndicator;
-        [SerializeField] private List<Dialogue> _startDialogues;
-        [SerializeField] private Dialogue _noDialogueDialogue;
-
-        private readonly List<Dialogue> _dialogues = new();
+        [SerializeField] private string _key;
+        [SerializeField] private bool _isOneTime;
 
         [Inject] private DialoguesManager _dialoguesManager;
         [Inject] private InteractService _interactService;
 
-        private void Awake()
-        {
-            _dialogues.AddRange(_startDialogues);
-        }
+        private bool _interacted;
 
         public void Interact()
         {
             if (_dialoguesManager.IsDialogueCooldown()) return;
+            if (_interacted && _isOneTime) return;
 
-            Debug.Log("Interacting with dialogue object. Dialogues count: " + _dialogues.Count);
-            if (_dialogues.Count > 0)
+            Debug.Log("Interacting with dialogue object. Dialogues count: " + _dialoguesManager.Dialogues[_key].Count);
+            if (_dialoguesManager.Dialogues[_key].Count > 0)
             {
-                var dialogue = _dialogues.First();
+                var dialogue = _dialoguesManager.Dialogues[_key].First();
                 _dialoguesManager.StartDialogue(dialogue);
-                _dialogues.Remove(dialogue);
+                _dialoguesManager.Dialogues[_key].Remove(dialogue);
+                _interacted = true;
             }
             else
             {
-                _dialoguesManager.StartDialogue(_noDialogueDialogue);
+                _dialoguesManager.StartDialogue(_dialoguesManager.NoDialogueDialogue);
             }
         }
 
         public void Update()
         {
-            _canInteractIndicator.alpha = ReferenceEquals(_interactService.CurrentInteractable, this) ? 1 : 0;
-        }
-
-        public void LoadDialogue(string dialogue)
-        {
-            var load = Resources.Load<Dialogue>(dialogue);
-            if (load == null)
+            if (_interacted && _isOneTime)
             {
-                Debug.LogError($"Dialogue {dialogue} not found.");
-                return;
+                _canInteractIndicator.alpha = 0;
             }
-
-            _dialogues.Add(load);
+            else
+            {
+                _canInteractIndicator.alpha = ReferenceEquals(_interactService.CurrentInteractable, this) ? 1 : 0;
+            }
         }
     }
 }

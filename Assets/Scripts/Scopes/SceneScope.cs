@@ -18,6 +18,8 @@ namespace Scopes
         [SerializeField] private InventoryUI _inventoryUI;
         [SerializeField] private CodeKeyUI _codeKeyUI;
         [SerializeField] private LoadingUI _loadingUI;
+        [SerializeField] private NotesUI _notesUI;
+        [Space]
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private DevilZoneController _devilZoneController;
 
@@ -36,6 +38,7 @@ namespace Scopes
             builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(_dialogueUI);
             builder.RegisterInstance(_filmModeUI);
+            builder.RegisterInstance(_notesUI);
 
             builder.Register<DialoguesManager>(Lifetime.Singleton);
         }
