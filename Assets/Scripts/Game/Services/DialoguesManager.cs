@@ -35,6 +35,12 @@ namespace Game.Services
             NoDialogueDialogue = LoadDialogue("NoDialogue");
         }
 
+        public void StartDialogue(string key)
+        {
+            Dialogue d = LoadDialogue(key);
+            StartDialogue(d);
+        }
+        
         public void StartDialogue(Dialogue dialogue)
         {
             DOTween.Sequence()
