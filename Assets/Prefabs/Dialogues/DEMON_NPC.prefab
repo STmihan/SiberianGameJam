@@ -266,7 +266,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canInteractIndicator: {fileID: 1958129958073628722}
-  _key: Demon
+  _key: Devil
+  _isOneTime: 0
+  _customNoDialogueDialogue: {fileID: 0}
 --- !u!58 &7309917432562856854
 CircleCollider2D:
   m_ObjectHideFlags: 0
