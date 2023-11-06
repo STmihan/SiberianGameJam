@@ -5,7 +5,7 @@ using VContainer;
 
 namespace Game.Objects
 {
-    public class DevilZoneObject : MonoBehaviour, IInjectable
+    public class DZObject : MonoBehaviour, IInjectable
     {
         [Inject] private DevilZoneController _devilZoneController;
 
@@ -13,7 +13,11 @@ namespace Game.Objects
 
         private void Start()
         {
-            GetComponent<Renderer>().material = _devilZoneController.Mat;
+            var componentsInChildren = GetComponentsInChildren<Renderer>();
+            foreach (var component in componentsInChildren)
+            {
+                component.material = _devilZoneController.Mat;
+            }
             if (TryGetComponent(out Collider2D col)) _collider = col;
         }
 
