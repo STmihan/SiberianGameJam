@@ -11,7 +11,6 @@ namespace Game.UI
         private void Start()
         {
             _canvasGroup.alpha = 0;
-            _canvasGroup.blocksRaycasts = true;
         }
 
         public Tween Fade(bool toggle)
