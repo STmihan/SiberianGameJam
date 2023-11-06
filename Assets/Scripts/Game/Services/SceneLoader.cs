@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using Game.Data;
 using Game.Factories;
 using Game.UI;
@@ -16,7 +17,9 @@ namespace Game.Services
         private readonly SceneList _sceneList;
         private readonly LoadingUI _ui;
         private readonly InputManager _inputManager;
-        
+
+        private Dictionary<string, GameObject> _scenes = new();
+
         [Inject]
         public SceneLoader(IObjectResolver container, LoadingUI ui, InputManager inputManager)
         {
@@ -45,7 +48,7 @@ namespace Game.Services
                 Debug.LogError("No spawn points found");
                 return;
             }
-            
+
             if (spawnPointKey == string.Empty)
             {
                 spawnPoints[0].Spawn();
@@ -64,18 +67,28 @@ namespace Game.Services
 
         private void CreateScene(string sceneName)
         {
+            if (_currentScene != null)
+            {
+                _currentScene.SetActive(false);
+            }
+            
+            if (!_scenes.ContainsKey(sceneName))
+            {
+                var scene = _sceneList.GetScene(sceneName);
+                _currentScene = _container.Instantiate(scene);
+                _scenes[sceneName] = _currentScene;
+            }
+            else
+            {
+                _currentScene = _scenes[sceneName];
+                _currentScene.SetActive(true);
+            }
+            
             var go = _sceneList.GetScene(sceneName);
             if (go == null)
             {
                 Debug.LogError($"Scene {sceneName} not found");
             }
-
-            if (_currentScene != null)
-            {
-                Object.Destroy(_currentScene);
-            }
-
-            _currentScene = _container.Instantiate(go);
         }
     }
 }

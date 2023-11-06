@@ -103,14 +103,14 @@ namespace Game
 
                 if (_devilZoneController.Enabled)
                 {
-                    if (!hits[i].GetComponent<DevilZoneObject>()) continue;
+                    if (!hits[i].GetComponent<DZObject>()) continue;
 
                     _interactService.CurrentInteractable = interactable;
                     if (_inputManager.GetInteractInput()) interactable.Interact();
                 }
                 else
                 {
-                    if (hits[i].GetComponent<DevilZoneObject>()) continue;
+                    if (hits[i].GetComponent<DZObject>()) continue;
 
                     _interactService.CurrentInteractable = interactable;
                     if (_inputManager.GetInteractInput()) interactable.Interact();

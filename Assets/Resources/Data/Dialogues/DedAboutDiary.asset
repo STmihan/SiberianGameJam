@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Text>k__BackingField:
   - "\u041D\u0430\u0439\u0434\u0438 \u043A\u043B\u044E\u0447 \u043E\u0442 \u0434\u043D\u0435\u0432\u043D\u0438\u043A\u0430"
-  <CallbackObject>k__BackingField: {fileID: 0}
+  <CallbackObject>k__BackingField: {fileID: -1665949058296935518, guid: c01f5662c46437e42992a6112a775088, type: 3}
