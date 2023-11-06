@@ -1,10 +1,10 @@
 ﻿namespace Game.CallbackObjects
 {
-    public class OpenShopBookCallback : CallbackObject
+    public class OpenChessInDungeonCallback : CallbackObject
     {
         public override void Callback(object payload = null)
         {
-            GameController.SendEvent(GameEvent.ShopBook);
+            GameController.SendEvent(GameEvent.OpenChessInDungeon);
         }
     }
 }

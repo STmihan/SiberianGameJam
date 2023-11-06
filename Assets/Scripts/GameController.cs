@@ -14,7 +14,6 @@ public enum GameEvent
     ReadDiary,
     FindChessInDungeon,
     OpenChessInDungeon,
-    ShopBook,
 }
 
 public class GameController : IStartable
@@ -43,12 +42,13 @@ public class GameController : IStartable
     private void SetupDialogs()
     {
         _dialoguesManager.LoadDialogue("Farmer", "Farmer");
-        _dialoguesManager.LoadDialogue("PlaygroundChess", "ChessFromPlayground");
         _dialoguesManager.LoadDialogue("Kids", "KidsAboutShovel");
         _dialoguesManager.LoadDialogue("Kids", "KidsAboutDed");
         _dialoguesManager.LoadDialogue("Ded", "DedAboutDiary");
         _dialoguesManager.LoadDialogue("Devil", "Devil");
         _dialoguesManager.LoadDialogue("Miner", "Miner");
+        _dialoguesManager.LoadDialogue("PlaygroundChess", "ChessFromPlayground");
+        _dialoguesManager.LoadDialogue("ShopBook", "ShopBook");
     }
 
     public static void SendEvent(GameEvent gameEvent, object payload = null)
@@ -57,6 +57,9 @@ public class GameController : IStartable
     }
 
     private bool _diaryRead = false;
+    private bool _foundChessInDungeon = false;
+    private bool _openedChessInPlayground = false;
+    private bool _openedChessInDungeon = false;
 
     private void OnGameEventCallback(GameEvent gameEvent, object payload)
     {
@@ -69,8 +72,8 @@ public class GameController : IStartable
                 _dialoguesManager.LoadDialogue("Farmer", "Farmer");
                 break;
             case GameEvent.ChessDigUp:
-                _inventoryUi.RemoveItem("Shovel");
                 _dialoguesManager.LoadDialogue("Ded", _diaryRead ? "DedAboutMiner" : "DedAboutMinerWithoutDiary");
+                _openedChessInPlayground = true;
                 break;
             case GameEvent.TalkToDed:
                 _dialoguesManager.LoadDialogue("Devil", "DevilAboutDedsKey");
@@ -84,6 +87,8 @@ public class GameController : IStartable
                 _dialoguesManager.StartDialogue("DedsDiary");
                 break;
             case GameEvent.FindChessInDungeon:
+                if (_foundChessInDungeon) return;
+                _foundChessInDungeon = true;
                 _dialoguesManager.LoadDialogue("Miner", "MinerAfterFindChessInDZ");
                 _dialoguesManager.LoadDialogue("Kids", "KidsAboutMiner");
                 break;
@@ -92,9 +97,10 @@ public class GameController : IStartable
                 _dialoguesManager.LoadDialogue("Miner", "MinerAfterOpenChess");
                 _dialoguesManager.RemoveDialogue("PlaygroundChess", "ChessFromPlayground");
                 _dialoguesManager.LoadDialogue("PlaygroundChess", "ChessFromPlaygroundWithDungeonChess");
-                break;
-            case GameEvent.ShopBook:
-                _dialoguesManager.StartDialogue("ShopBook");
+                _dialoguesManager.StartDialogue(_openedChessInPlayground
+                    ? "OpenChessOnDungeon"
+                    : "OpenChessOnDungeonNoPGChess");
+                _openedChessInDungeon = true;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(gameEvent), gameEvent, null);
