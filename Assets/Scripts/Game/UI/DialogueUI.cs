@@ -11,7 +11,7 @@ using VContainer;
 
 namespace Game.UI
 {
-    public class DialogueUI : MonoBehaviour
+    public class DialogueUI : MonoBehaviour, IUI
     {
         public event Action<Dialogue> OnDialogueEnd;
 

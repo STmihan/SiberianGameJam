@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.UI
 {
-    public class InventoryUI : MonoBehaviour
+    public class InventoryUI : MonoBehaviour, IUI
     {
         [SerializeField] private RectTransform _itemContainer;
 

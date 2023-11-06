@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using Game.Data;
 using Game.UI;
 using UnityEngine;
@@ -9,11 +11,15 @@ namespace Game.Services
 {
     public class DialoguesManager : ITickable
     {
+        public const float InteractionCooldown = 1.5f;
+        private const string DialoguePath = "Data/Dialogues/";
+
+        public Dictionary<string, List<Dialogue>> Dialogues { get; } = new();
+        public Dialogue NoDialogueDialogue { get; private set; }
+
         private readonly InputManager _inputManager;
         private readonly DialogueUI _dialogueUI;
         private readonly FilmModeUI _filmModeUI;
-
-        public const float InteractionCooldown = 1.5f;
 
         private float _currentCooldown;
 
@@ -23,6 +29,7 @@ namespace Game.Services
             _inputManager = inputManager;
             _dialogueUI = dialogueUI;
             _filmModeUI = filmModeUI;
+            NoDialogueDialogue = LoadDialogue("NoDialogue");
         }
 
         public void StartDialogue(Dialogue dialogue)
@@ -33,15 +40,20 @@ namespace Game.Services
                 .AppendCallback(() => Debug.Log(dialogue.ToString()))
                 .AppendInterval(FilmModeUI.FadeDuration)
                 .AppendCallback(() => _dialogueUI.ShowDialogue(dialogue))
-                .AppendCallback(() => _dialogueUI.OnDialogueEnd += OnDialogueEnd);
+                .AppendCallback(() => _dialogueUI.OnDialogueEnd += OnDialogueEndCallback);
         }
 
-        private void OnDialogueEnd(Dialogue dialogue)
+        private void OnDialogueEndCallback(Dialogue dialogue)
         {
-            _dialogueUI.OnDialogueEnd -= OnDialogueEnd;
+            _dialogueUI.OnDialogueEnd -= OnDialogueEndCallback;
             _inputManager.PlayerInputBlocked = false;
             _filmModeUI.Disable();
             _currentCooldown = InteractionCooldown;
+            
+            if (dialogue.CallbackObject != null)
+            {
+                dialogue.CallbackObject.Callback();
+            }
         }
 
         public bool IsDialogueCooldown()
@@ -61,6 +73,33 @@ namespace Game.Services
         public void Tick()
         {
             ProcessTimer();
+        }
+
+        public void LoadDialogue(string npc, string dialogue)
+        {
+            Dialogue loadDialogue = LoadDialogue(dialogue);
+            IncludeDialogue(loadDialogue, npc);
+        }
+
+        private Dialogue LoadDialogue(string dialogue)
+        {
+            var load = Resources.Load<Dialogue>(DialoguePath + dialogue);
+            if (load == null)
+            {
+                Debug.LogError($"Dialogue {dialogue} not found.");
+                return null;
+            }
+
+            return load;
+        }
+
+        private void IncludeDialogue(Dialogue dialogue, string npc)
+        {
+            if (!Dialogues.ContainsKey(npc))
+            {
+                Dialogues[npc] = new List<Dialogue>();
+            }
+            Dialogues[npc].Add(dialogue);
         }
     }
 }

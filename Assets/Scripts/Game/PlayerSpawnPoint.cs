@@ -7,15 +7,11 @@ namespace Game
 {
     public class PlayerSpawnPoint : MonoBehaviour, IInjectable
     {
+        [field: SerializeField] public string Key { get; private set; }
         [Inject] private PlayerControllerFactory _playerControllerFactory;
         [Inject] private CameraController _cameraController;
-        
-        private void Start()
-        {
-            Spawn();
-        }
 
-        private void Spawn()
+        public void Spawn()
         {
             PlayerController playerController = _playerControllerFactory.Create(transform.position);
             _cameraController.SetTarget(playerController.transform);

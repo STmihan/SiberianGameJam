@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Game.UI
 {
-    public class CodeKeyUIItem : MonoBehaviour
+    public class CodeKeyUIItem : MonoBehaviour, IUI
     {
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _previousButton;
