@@ -30,6 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3082511035254954027}
+  - {fileID: 7205601936383438481}
   - {fileID: 5234605591513104612}
   - {fileID: 9169827311967730129}
   - {fileID: 7914047228190864877}
@@ -1998,3 +1999,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneName: Village
   _spawnPointKey: Dungeon
+--- !u!1001 &606921167743564903
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5582005063533461211}
+    m_Modifications:
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8265899542779820109, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+      propertyPath: m_Name
+      value: MINER_NPC
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+--- !u!4 &7205601936383438481 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7751617856462476022, guid: 76d9648596eabd346ad80fb57a2dd233, type: 3}
+  m_PrefabInstance: {fileID: 606921167743564903}
+  m_PrefabAsset: {fileID: 0}
