@@ -300,7 +300,6 @@ GameObject:
   - component: {fileID: 5502331941852512016}
   - component: {fileID: 4887344208555818131}
   - component: {fileID: 6064470982959202505}
-  - component: {fileID: 5582196803827200016}
   m_Layer: 0
   m_Name: PLAYGROUND_CHESS
   m_TagString: Untagged
@@ -436,20 +435,7 @@ MonoBehaviour:
   _canInteractIndicator: {fileID: 4846054354654778685}
   _keyToOpen: Shovel
   _collider: {fileID: 4887344208555818131}
-  _onOpened: {fileID: 5582196803827200016}
---- !u!114 &5582196803827200016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360286195031127368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260d3693a9b92f1418606bc1e9abf1cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chessPrefab: {fileID: 7210521439068427123, guid: f92a65072044e6949918079eab80815e, type: 3}
+  _onOpened: {fileID: 6110279000535108491, guid: 77947a8c44bb3754099e09dc4767a533, type: 3}
 --- !u!1 &1704789862855628034
 GameObject:
   m_ObjectHideFlags: 0

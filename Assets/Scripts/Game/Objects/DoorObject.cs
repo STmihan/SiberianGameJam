@@ -1,9 +1,11 @@
-﻿using Game.CallbackObjects;
+﻿using System;
+using Game.CallbackObjects;
 using Game.Services;
 using Game.UI;
 using Scopes;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace Game.Objects
 {
@@ -17,9 +19,15 @@ namespace Game.Objects
         
         [Inject] private InventoryUI _inventory;
         [Inject] private InteractService _interactService;
-
-        private bool _open;
+        [Inject] private IObjectResolver _resolver;
         
+        private bool _open;
+
+        private void Start()
+        {
+            _onOpened = _resolver.Instantiate(_onOpened);
+        }
+
         public void Interact()
         {
             if (_inventory.HasItem(_keyToOpen))
