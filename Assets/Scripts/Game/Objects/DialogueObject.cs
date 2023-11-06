@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Game.CallbackObjects;
 using Game.Data;
 using Game.Services;
 using Scopes;
@@ -13,6 +12,7 @@ namespace Game.Objects
         [SerializeField] private CanvasGroup _canInteractIndicator;
         [SerializeField] private string _key;
         [SerializeField] private bool _isOneTime;
+        [SerializeField] private Dialogue _customNoDialogueDialogue;
 
         [Inject] private DialoguesManager _dialoguesManager;
         [Inject] private InteractService _interactService;
@@ -34,7 +34,14 @@ namespace Game.Objects
             }
             else
             {
-                _dialoguesManager.StartDialogue(_dialoguesManager.NoDialogueDialogue);
+                if (_customNoDialogueDialogue != null)
+                {
+                    _dialoguesManager.StartDialogue(_customNoDialogueDialogue);
+                }
+                else
+                {
+                    _dialoguesManager.StartDialogue(_dialoguesManager.NoDialogueDialogue);
+                }
             }
         }
 

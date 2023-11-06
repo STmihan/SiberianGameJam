@@ -11,7 +11,7 @@ namespace Game.Data
         public string Name { get; private set; }
 
         private const string DataPath = "Data/Items/";
-        private const string PrefabPath = "Prefabs/Items/UI/";
+        private const string PrefabPath = "Items/UI/";
 
         public static Item GetItem(string key)
         {
