@@ -4,7 +4,7 @@ namespace Game.Services
 {
     public class InputManager
     {
-        public bool PlayerInputBlocked { get; set; } = false;
+        public bool PlayerInputBlocked { get; set; }
         
         public Vector2 GetMovementInput()
         {
@@ -39,7 +39,8 @@ namespace Game.Services
         {
             if (PlayerInputBlocked) return false;
             
-            return Input.GetKeyDown(KeyCode.N);
+            // return Input.GetKeyDown(KeyCode.N);
+            return false;
         }
 
         public bool GetEndGame()
