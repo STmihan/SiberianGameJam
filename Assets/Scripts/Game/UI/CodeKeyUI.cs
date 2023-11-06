@@ -8,7 +8,7 @@ using VContainer;
 
 namespace Game.UI
 {
-    public class CodeKeyUI : MonoBehaviour
+    public class CodeKeyUI : MonoBehaviour, IUI
     {
         public event Action<string> OnCodeEntered;
         

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Data;
 using TMPro;
 using UnityEngine;
 
 namespace Game.UI
 {
-    public class NotesUI : MonoBehaviour
+    public class NotesUI : MonoBehaviour, IUI
     {
         private const string NotePath = "Data/Notes/";
         

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Game.UI
 {
-    public class FilmModeUI : MonoBehaviour
+    public class FilmModeUI : MonoBehaviour, IUI
     {
         [SerializeField] private Image _top;
         [SerializeField] private Image _bottom;

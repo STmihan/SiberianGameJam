@@ -9,7 +9,9 @@ namespace Game.Factories
         private const string PlayerPrefabPath = "Prefabs/Player";
         private readonly IObjectResolver _resolver;
         private readonly PlayerController _prefab;
-        
+
+        public PlayerController PlayerController { get; private set; }
+
         public PlayerControllerFactory(IObjectResolver resolver)
         {
             _resolver = resolver;
@@ -19,7 +21,16 @@ namespace Game.Factories
 
         public PlayerController Create(Vector3 pos)
         {
-            return _resolver.Instantiate(_prefab, pos, Quaternion.identity);
+            if (PlayerController == null)
+            {
+                PlayerController = _resolver.Instantiate(_prefab, pos, Quaternion.identity);
+            }
+            else
+            {
+                PlayerController.transform.position = pos;
+            }
+
+            return PlayerController;
         }
     }
 }

@@ -19,7 +19,7 @@ public class GameController : IStartable
         Debug.Log("GameController.Start");
         if (SceneManager.GetActiveScene().name == "Gameplay")
         {
-            _sceneLoader.LoadScene("Village");
+            _sceneLoader.LoadScene("Village", "Main");
         }
     }
 }
