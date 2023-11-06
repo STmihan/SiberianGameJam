@@ -1,4 +1,5 @@
-﻿using Game.Services;
+﻿using Game.CallbackObjects;
+using Game.Services;
 using Game.UI;
 using Scopes;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Game.Objects
 
         [SerializeField] private string _keyToOpen;
         [SerializeField] private Collider2D _collider;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private CallbackObject _onOpened;
         
         [Inject] private InventoryUI _inventory;
         [Inject] private InteractService _interactService;
@@ -24,8 +25,8 @@ namespace Game.Objects
             if (_inventory.HasItem(_keyToOpen))
             {
                 _open = true;
-                _spriteRenderer.enabled = false;
                 _inventory.RemoveItem(_keyToOpen);
+                _onOpened.Callback();
             }
             else
             {

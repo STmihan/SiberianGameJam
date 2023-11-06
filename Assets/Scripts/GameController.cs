@@ -34,6 +34,7 @@ public class GameController : IStartable
     private void SetupDialogs()
     {
         _dialoguesManager.LoadDialogue("Farmer", "Dialogue1");
+        _dialoguesManager.LoadDialogue("PlaygroundChess", "Dialogue1");
     }
     
     private void OnOnGameEvent(GameEvent gameEvent, object payload)
