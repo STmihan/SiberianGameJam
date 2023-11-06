@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Game.CallbackObjects;
 using Game.Data;
 using Game.UI;
 using UnityEngine;
@@ -20,15 +21,17 @@ namespace Game.Services
         private readonly InputManager _inputManager;
         private readonly DialogueUI _dialogueUI;
         private readonly FilmModeUI _filmModeUI;
+        private readonly IObjectResolver _resolver;
 
         private float _currentCooldown;
 
         [Inject]
-        public DialoguesManager(InputManager inputManager, DialogueUI dialogueUI, FilmModeUI filmModeUI)
+        public DialoguesManager(InputManager inputManager, DialogueUI dialogueUI, FilmModeUI filmModeUI, IObjectResolver resolver)
         {
             _inputManager = inputManager;
             _dialogueUI = dialogueUI;
             _filmModeUI = filmModeUI;
+            _resolver = resolver;
             NoDialogueDialogue = LoadDialogue("NoDialogue");
         }
 
@@ -52,7 +55,8 @@ namespace Game.Services
             
             if (dialogue.CallbackObject != null)
             {
-                dialogue.CallbackObject.Callback();
+                CallbackObject callbackObject = _resolver.Instantiate(dialogue.CallbackObject);
+                callbackObject.Callback();
             }
         }
 
@@ -79,6 +83,14 @@ namespace Game.Services
         {
             Dialogue loadDialogue = LoadDialogue(dialogue);
             IncludeDialogue(loadDialogue, npc);
+        }
+
+        public void RemoveDialogue(string npc, string dialogue)
+        {
+            if (Dialogues.TryGetValue(npc, out var dialogues))
+            {
+                dialogues.RemoveAll(d => d.name == dialogue);
+            }
         }
 
         private Dialogue LoadDialogue(string dialogue)

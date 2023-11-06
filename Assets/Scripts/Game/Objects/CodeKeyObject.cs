@@ -1,10 +1,12 @@
-﻿using Game.CallbackObjects;
+﻿using System;
+using Game.CallbackObjects;
 using Game.Data;
 using Game.Services;
 using Game.UI;
 using Scopes;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace Game.Objects
 {
@@ -16,12 +18,18 @@ namespace Game.Objects
         
         [Inject] private InteractService _interactService;
         [Inject] private CodeKeyUI _codeKeyUi;
-
+        [Inject] private IObjectResolver _resolver;
+        
         private bool _opened;
         
         private const float InteractDelay = 1.5f;
         private float _interactDelayTimer;
-        
+
+        private void Start()
+        {
+            _onOpened = _resolver.Instantiate(_onOpened);
+        }
+
         public void Interact()
         {
             if (_opened) return;

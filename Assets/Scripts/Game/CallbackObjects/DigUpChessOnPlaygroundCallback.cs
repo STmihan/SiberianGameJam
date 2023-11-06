@@ -1,19 +1,16 @@
-﻿using Scopes;
-using UnityEngine;
+﻿using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
 namespace Game.CallbackObjects
 {
-    public class DigUpChessOnPlaygroundCallback : CallbackObject, IInjectable
+    public class DigUpChessOnPlaygroundCallback : CallbackObject
     {
         [SerializeField] private GameObject _chessPrefab;
-        
-        [Inject] private IObjectResolver _objectResolver;
+        [Inject] private IObjectResolver _resolver;
         
         public override void Callback(object payload = null)
         {
-            _objectResolver.Instantiate(_chessPrefab, transform.position, Quaternion.identity);
             if (TryGetComponent(out Renderer r))
             {
                 r.enabled = false;
@@ -22,6 +19,8 @@ namespace Game.CallbackObjects
             {
                 c.enabled = false;
             }
+            _resolver.Instantiate(_chessPrefab, transform.position, Quaternion.identity);
+            GameController.SendEvent(GameEvent.ChessDigUp);
         }
     }
 }

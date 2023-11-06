@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3bfd0b26cf4d4d4e84b19ddec6c40ae, type: 3}
-  m_Name: key_green
+  m_Script: {fileID: 11500000, guid: 414aa84655f22cd47a89c2add80938e2, type: 3}
+  m_Name: Miner
   m_EditorClassIdentifier: 
-  <Key>k__BackingField: key_green
-  <Name>k__BackingField: "\u0417\u0435\u043B\u0451\u043D\u044B\u0439 \u043A\u043B\u044E\u0447"
+  <Text>k__BackingField:
+  - "\u0428\u0430\u0445\u0442\u0451\u0440 \u043E \u0440\u0430\u0437\u043D\u043E\u043C"
+  <CallbackObject>k__BackingField: {fileID: 0}
